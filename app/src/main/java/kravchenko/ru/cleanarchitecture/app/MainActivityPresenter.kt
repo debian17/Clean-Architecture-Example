@@ -1,8 +1,10 @@
 package kravchenko.ru.cleanarchitecture.app
 
+import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kravchenko.ru.cleanarchitecture.data.model.Person
 import kravchenko.ru.cleanarchitecture.data.model.User
+import kravchenko.ru.cleanarchitecture.domain.usecase.getMedOrgsUseCase
 import kravchenko.ru.cleanarchitecture.domain.usecase.getPersonsUseCase
 import kravchenko.ru.cleanarchitecture.domain.usecase.getUsersUseCase
 
@@ -36,5 +38,15 @@ class MainActivityPresenter {
 
     private fun onGetPersonsError(throwable: Throwable) {
         // /catch error
+    }
+
+    fun getMedOrgs() {
+        getMedOrgsUseCase()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    it.forEach { medOrg ->
+                        Log.e("NAME", medOrg.name)
+                    }
+                }, {})
     }
 }
