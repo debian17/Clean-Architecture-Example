@@ -25,6 +25,6 @@ fun getPersonsInjectionUseCase(): Single<List<Person>> {
 }
 
 fun getMedOrgsUseCase(): Single<List<MedOrg>> {
-    val repository: DataSource = App.getAppComponent().provideRepository()
+    val repository: DataSource = App.getUseCaseComponent().provideRepository()
     return repository.getMedOrgs()
 }

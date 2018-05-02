@@ -1,7 +1,7 @@
 package kravchenko.ru.cleanarchitecture.app
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import kravchenko.ru.cleanarchitecture.R
 
 class MainActivity : AppCompatActivity() {

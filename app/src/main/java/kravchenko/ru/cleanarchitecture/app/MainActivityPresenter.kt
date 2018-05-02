@@ -1,19 +1,31 @@
 package kravchenko.ru.cleanarchitecture.app
 
 import android.util.Log
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kravchenko.ru.cleanarchitecture.data.model.Person
 import kravchenko.ru.cleanarchitecture.data.model.User
 import kravchenko.ru.cleanarchitecture.domain.usecase.getMedOrgsUseCase
 import kravchenko.ru.cleanarchitecture.domain.usecase.getPersonsUseCase
-import kravchenko.ru.cleanarchitecture.domain.usecase.getUsersUseCase
+import javax.inject.Inject
 
 class MainActivityPresenter {
 
+    private val users1: () -> Single<List<User>> = App.getUseCaseComponent().provideUsersUseCase()// Либо так (лучше)
+
+    @Inject
+    lateinit var users2: () -> Single<List<User>>//Либо так
+
+    init {
+        App.getUseCaseComponent().inject(this)
+    }
+
     fun getUsers() {
-        //do not forget unsubscribe when destroyView
-        getUsersUseCase()
-                .invoke() // if we return lambda, we need invoke it.
+        users1()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onGetUsersSuccess, this::onGetUsersError)
+        //or
+        users2()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onGetUsersSuccess, this::onGetUsersError)
     }
