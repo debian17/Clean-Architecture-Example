@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val presenter = MainActivityPresenter()
+        //commit for some f4
 
         presenter.getMedOrgs()
 
